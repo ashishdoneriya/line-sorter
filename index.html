@@ -1,0 +1,49 @@
+<!Doctype HTML>
+<html>
+
+<head>
+	<title>Line Sorter</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="index.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+</head>
+
+<body>
+	<div id="vapp">
+		<div class="mainbody">
+			<div class="heading">
+				<input type="text" placeholder="Line Sorter">
+				<div class="menu">
+					<button class="button successBackground" @click="sort()">Sort</button>
+					<button class="button infoBackground" @click="content = ''">Clear</button>
+				</div>
+			</div>
+			<textarea v-model="content"></textarea>
+		</div>
+	</div>
+
+</body>
+<script>
+	window.addEventListener("load", function() {
+		var app = new Vue({
+			el: '#vapp',
+			data: {
+				content: ''
+			},
+			methods: {
+				sort() {
+					var arr = this.content.split('\n')
+					arr.sort(function(a, b) {
+						a = a.toString(), b = b.toString();
+						for (var i = 0, n = Math.max(a.length, b.length); i < n && a.charAt(i) === b.charAt(i); ++i);
+						if (i === n) return 0;
+						return a.charAt(i) > b.charAt(i) ? 1 : -1;
+					});
+					this.content = arr.join('\n').trim();
+				}
+			}
+		});
+	});
+</script>
+
+</html>
